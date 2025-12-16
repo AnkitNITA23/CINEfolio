@@ -1,0 +1,519 @@
+{
+  "entities": {
+    "User": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "User",
+      "type": "object",
+      "description": "Represents a user of the CineFolio platform.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the user.",
+          "format": "uuid"
+        },
+        "username": {
+          "type": "string",
+          "description": "The username of the user."
+        },
+        "email": {
+          "type": "string",
+          "description": "The email address of the user.",
+          "format": "email"
+        },
+        "avatarUrl": {
+          "type": "string",
+          "description": "URL of the user's avatar image.",
+          "format": "uri"
+        },
+        "joinDate": {
+          "type": "string",
+          "description": "The date and time the user joined the platform.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "username",
+        "email",
+        "joinDate"
+      ]
+    },
+    "Movie": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Movie",
+      "type": "object",
+      "description": "Represents a movie available on the CineFolio platform.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the movie."
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the movie."
+        },
+        "releaseYear": {
+          "type": "number",
+          "description": "The year the movie was released."
+        },
+        "description": {
+          "type": "string",
+          "description": "A brief description or synopsis of the movie."
+        },
+        "posterUrl": {
+          "type": "string",
+          "description": "URL of the movie's poster image.",
+          "format": "uri"
+        },
+        "trailerUrl": {
+          "type": "string",
+          "description": "URL of the movie's trailer video.",
+          "format": "uri"
+        },
+        "genreIds": {
+          "type": "array",
+          "description": "References to Genre. (Relationship: Genre N:N Movie)",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "releaseYear",
+        "description",
+        "posterUrl"
+      ]
+    },
+    "Series": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Series",
+      "type": "object",
+      "description": "Represents a web series or TV show available on the CineFolio platform.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the series."
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the series."
+        },
+        "startYear": {
+          "type": "number",
+          "description": "The year the series started airing."
+        },
+        "endYear": {
+          "type": "number",
+          "description": "The year the series ended airing (null if still ongoing)."
+        },
+        "description": {
+          "type": "string",
+          "description": "A brief description or synopsis of the series."
+        },
+        "posterUrl": {
+          "type": "string",
+          "description": "URL of the series's poster image.",
+          "format": "uri"
+        },
+        "trailerUrl": {
+          "type": "string",
+          "description": "URL of the series's trailer video.",
+          "format": "uri"
+        },
+        "genreIds": {
+          "type": "array",
+          "description": "References to Genre. (Relationship: Genre N:N Series)",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "startYear",
+        "description",
+        "posterUrl"
+      ]
+    },
+    "Genre": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Genre",
+      "type": "object",
+      "description": "Represents a genre associated with movies and series.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the genre."
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the genre (e.g., Action, Comedy, Drama)."
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ]
+    },
+    "Follow": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Follow",
+      "type": "object",
+      "description": "A simple document to represent a follow relationship.",
+      "properties": {
+        "followedAt": {
+          "type": "string",
+          "description": "The timestamp when the follow action occurred.",
+          "format": "date-time"
+        }
+      },
+      "required": ["followedAt"]
+    },
+    "Watchlist": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Watchlist",
+      "type": "object",
+      "description": "Represents a user's watchlist, containing movies and series they want to watch.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the watchlist entry."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to User. (Relationship: User 1:N Watchlist)"
+        },
+        "mediaId": {
+          "type": "string",
+          "description": "Reference to either Movie or Series. (Polymorphic relationship - see WatchlistItemType for disambiguation)"
+        },
+        "watchlistItemType": {
+          "type": "string",
+          "description": "Indicates the type of media being watched.  Allowed values: 'movie', 'series'.",
+          "format": "enum",
+          "items": {
+            "type": "string"
+          }
+        },
+        "addedDate": {
+          "type": "string",
+          "description": "The date and time the media was added to the watchlist.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "mediaId",
+        "watchlistItemType",
+        "addedDate"
+      ]
+    },
+    "WatchedHistory": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "WatchedHistory",
+      "type": "object",
+      "description": "Represents a user's history of watched movies and series.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the watched history entry."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to User. (Relationship: User 1:N WatchedHistory)"
+        },
+        "mediaId": {
+          "type": "string",
+          "description": "Reference to either Movie or Series. (Polymorphic relationship - see WatchedHistoryItemType for disambiguation)"
+        },
+        "watchedHistoryItemType": {
+          "type": "string",
+          "description": "Indicates the type of media being watched.  Allowed values: 'movie', 'series'.",
+          "format": "enum",
+          "items": {
+            "type": "string"
+          }
+        },
+        "watchedDate": {
+          "type": "string",
+          "description": "The date and time the media was watched.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "mediaId",
+        "watchedHistoryItemType",
+        "watchedDate"
+      ]
+    },
+    "LikedTitle": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "LikedTitle",
+      "type": "object",
+      "description": "Represents a movie or series liked by a user.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the liked title entry."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to User. (Relationship: User 1:N LikedTitle)"
+        },
+        "mediaId": {
+          "type": "string",
+          "description": "Reference to either Movie or Series. (Polymorphic relationship - see LikedTitleItemType for disambiguation)"
+        },
+        "likedTitleItemType": {
+          "type": "string",
+          "description": "Indicates the type of media being watched.  Allowed values: 'movie', 'series'.",
+          "format": "enum",
+          "items": {
+            "type": "string"
+          }
+        },
+        "likedDate": {
+          "type": "string",
+          "description": "The date and time the media was liked.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "mediaId",
+        "likedTitleItemType",
+        "likedDate"
+      ]
+    },
+    "Recommendation": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Recommendation",
+      "type": "object",
+      "description": "Represents a personalized movie or series recommendation for a user.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the recommendation."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to User. (Relationship: User 1:N Recommendation)"
+        },
+        "mediaId": {
+          "type": "string",
+          "description": "Reference to either Movie or Series. (Polymorphic relationship - see RecommendationItemType for disambiguation)"
+        },
+        "recommendationItemType": {
+          "type": "string",
+          "description": "Indicates the type of media being watched.  Allowed values: 'movie', 'series'.",
+          "format": "enum",
+          "items": {
+            "type": "string"
+          }
+        },
+        "reason": {
+          "type": "string",
+          "description": "The AI-provided reason why this media was recommended (e.g., 'Because you watched...')."
+        },
+        "relevanceScore": {
+          "type": "number",
+          "description": "A score (0-1) indicating the AI's confidence in the relevance of this recommendation."
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "mediaId",
+        "recommendationItemType",
+        "reason",
+        "relevanceScore"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "anonymous"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/users/{userId}",
+        "definition": {
+          "entityName": "User",
+          "schema": {
+            "$ref": "#/backend/entities/User"
+          },
+          "description": "Stores user profile information. Publicly readable.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier for the user."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/movies/{movieId}",
+        "definition": {
+          "entityName": "Movie",
+          "schema": {
+            "$ref": "#/backend/entities/Movie"
+          },
+          "description": "Stores movie information. Publicly readable.",
+          "params": [
+            {
+              "name": "movieId",
+              "description": "The unique identifier for the movie."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/series/{seriesId}",
+        "definition": {
+          "entityName": "Series",
+          "schema": {
+            "$ref": "#/backend/entities/Series"
+          },
+          "description": "Stores web series and TV show information. Publicly readable.",
+          "params": [
+            {
+              "name": "seriesId",
+              "description": "The unique identifier for the series."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/genres/{genreId}",
+        "definition": {
+          "entityName": "Genre",
+          "schema": {
+            "$ref": "#/backend/entities/Genre"
+          },
+          "description": "Stores genre information. Publicly readable.",
+          "params": [
+            {
+              "name": "genreId",
+              "description": "The unique identifier for the genre."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/watchlists/{watchListId}",
+        "definition": {
+          "entityName": "Watchlist",
+          "schema": {
+            "$ref": "#/backend/entities/Watchlist"
+          },
+          "description": "Stores user's watchlist entries. Accessible only by the user. Includes denormalized 'userId' for authorization independence.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier for the user."
+            },
+            {
+              "name": "watchListId",
+              "description": "The unique identifier for the watchlist entry."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/watched_history/{watchedHistoryId}",
+        "definition": {
+          "entityName": "WatchedHistory",
+          "schema": {
+            "$ref": "#/backend/entities/WatchedHistory"
+          },
+          "description": "Stores user's watched history. Accessible only by the user. Includes denormalized 'userId' for authorization independence.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier for the user."
+            },
+            {
+              "name": "watchedHistoryId",
+              "description": "The unique identifier for the watched history entry."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/liked_titles/{likedTitleId}",
+        "definition": {
+          "entityName": "LikedTitle",
+          "schema": {
+            "$ref": "#/backend/entities/LikedTitle"
+          },
+          "description": "Stores user's liked titles. Accessible only by the user. Includes denormalized 'userId' for authorization independence.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier for the user."
+            },
+            {
+              "name": "likedTitleId",
+              "description": "The unique identifier for the liked title entry."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/recommendations/{recommendationId}",
+        "definition": {
+          "entityName": "Recommendation",
+          "schema": {
+            "$ref": "#/backend/entities/Recommendation"
+          },
+          "description": "Stores personalized recommendations for the user. Accessible only by the user. Includes denormalized 'userId' for authorization independence.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier for the user."
+            },
+            {
+              "name": "recommendationId",
+              "description": "The unique identifier for the recommendation."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/following/{followingId}",
+        "definition": {
+          "entityName": "Follow",
+          "schema": { "$ref": "#/backend/entities/Follow" },
+          "description": "A list of users that {userId} is following. {followingId} is the UID of the user being followed.",
+          "params": [
+            { "name": "userId", "description": "The UID of the user who is following others." },
+            { "name": "followingId", "description": "The UID of the user being followed." }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/followers/{followerId}",
+        "definition": {
+          "entityName": "Follow",
+          "schema": { "$ref": "#/backend/entities/Follow" },
+          "description": "A list of users who are followers of {userId}. {followerId} is the UID of the user who is following.",
+          "params": [
+            { "name": "userId", "description": "The UID of the user who is being followed." },
+            { "name": "followerId", "description": "The UID of the user who is the follower." }
+          ]
+        }
+      }
+    ],
+    "reasoning": "The Firestore structure is designed to support the CineFolio platform, emphasizing authorization independence, clarity, and scalability. The core principle is to avoid hierarchical authorization dependencies (`get()`) by denormalizing authorization data where necessary. This ensures that security rules are robust and easy to debug, and that atomic operations are possible.\n\n**Authorization Independence (CRITICAL):**  Denormalization is used to ensure authorization independence. Specifically, the `Watchlist`, `WatchedHistory`, `LikedTitle`, `Recommendation`, `Following`, and `Followers` collections are structured under `/users/{userId}` to directly associate them with the user. This eliminates the need to `get()` parent user data within the security rules, enabling atomic operations.\n\n**Structural Segregation (Homogeneous Security Posture):** Each collection is designed to contain documents with similar security requirements. For instance, user-specific data (watchlist, watched history, etc.) are stored under their respective user ID, ensuring that rules applied to these collections are consistently applicable to all documents within them.\n\n**Access Modeling (Standardization and Consistency):** Path-based ownership is preferred for private user data. The `/users/{userId}/watchlists`, `/users/{userId}/watched_history`, `/users/{userId}/liked_titles`, and `/users/{userId}/recommendations` paths exemplify this pattern.  This makes security rules straightforward, relying primarily on `request.auth.uid` for authorization.\n\n**QAPs (Rules are not Filters):** The structure supports secure `list` operations.  By segregating user-specific data under their respective user IDs, listing operations can be secured by simply checking if `request.auth.uid == userId`.  The Movie, Series, and Genre collections do not include user specific information and therefore the security rules are simplified, enhancing security and performance.\n\n**Invariants:** The structure supports invariants like ownership and timestamps. For example, the `userId` field in `Watchlist`, `WatchedHistory`, `LikedTitle`, and `Recommendation` collections ensures clear ownership, and the timestamps (`addedDate`, `watchedDate`, `likedDate`) capture critical event history."
+  }
+}

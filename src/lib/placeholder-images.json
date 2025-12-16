@@ -1,0 +1,130 @@
+{
+  "placeholderImages": [
+    {
+      "id": "interstellar-poster",
+      "description": "Poster for the movie Interstellar",
+      "imageUrl": "https://images.unsplash.com/photo-1640127249308-098702574176?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzcGFjZSUyMG1vdmllfGVufDB8fHx8MTc2NTc3NDQ1MXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "space movie"
+    },
+    {
+      "id": "interstellar-banner",
+      "description": "Banner for the movie Interstellar",
+      "imageUrl": "https://images.unsplash.com/photo-1703782010144-49e3a6e4bca2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8c3BhY2UlMjBleHBsb3JhdGlvbnxlbnwwfHx8fDE3NjU3MDA2NTN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "space exploration"
+    },
+    {
+      "id": "darkknight-poster",
+      "description": "Poster for The Dark Knight",
+      "imageUrl": "https://images.unsplash.com/photo-1608889175106-86d4a3c66bd5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxzdXBlcmhlcm8lMjBtb3ZpZXxlbnwwfHx8fDE3NjU3MjM1MDR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "superhero movie"
+    },
+    {
+      "id": "darkknight-banner",
+      "description": "Banner for The Dark Knight",
+      "imageUrl": "https://images.unsplash.com/photo-1580895456895-cfdf02e4c23f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxjaXR5JTIwbmlnaHR8ZW58MHx8fHwxNzY1NzcxOTMxfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "city night"
+    },
+    {
+      "id": "inception-poster",
+      "description": "Poster for Inception",
+      "imageUrl": "https://images.unsplash.com/photo-1760862550651-b0b2b1f30660?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxtaW5kJTIwYmVuZGluZ3xlbnwwfHx8fDE3NjU3NzQ0NTF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "mind bending"
+    },
+    {
+      "id": "inception-banner",
+      "description": "Banner for Inception",
+      "imageUrl": "https://images.unsplash.com/photo-1706129183149-3bd9f2f02f34?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxzdXJyZWFsJTIwYXJjaGl0ZWN0dXJlfGVufDB8fHx8MTc2NTczNjM1OHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "surreal architecture"
+    },
+    {
+      "id": "dune2-poster",
+      "description": "Poster for Dune: Part Two",
+      "imageUrl": "https://images.unsplash.com/photo-1547234936-5d8db8c15af0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxkZXNlcnQlMjBwbGFuZXR8ZW58MHx8fHwxNzY1NzM2MzU4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "desert planet"
+    },
+    {
+      "id": "dune2-banner",
+      "description": "Banner for Dune: Part Two",
+      "imageUrl": "https://images.unsplash.com/photo-1598669266271-358c3cd2980e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxlcGljJTIwYmF0dGxlfGVufDB8fHx8MTc2NTc3NDQ1MXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "epic battle"
+    },
+    {
+      "id": "bladerunner-poster",
+      "description": "Poster for Blade Runner 2049",
+      "imageUrl": "https://images.unsplash.com/photo-1535021131637-96f0c931f5d2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxmdXR1cmlzdGljJTIwY2l0eXxlbnwwfHx8fDE3NjU3MTgxNDJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "futuristic city"
+    },
+    {
+      "id": "bladerunner-banner",
+      "description": "Banner for Blade Runner 2049",
+      "imageUrl": "https://images.unsplash.com/photo-1554229898-7f0ce657c869?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxjeWJlcnB1bmslMjByYWlufGVufDB8fHx8MTc2NTc3NDQ1MXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cyberpunk rain"
+    },
+    {
+      "id": "breakingbad-poster",
+      "description": "Poster for Breaking Bad",
+      "imageUrl": "https://images.unsplash.com/photo-1595010310274-917b76786803?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxkZXNlcnQlMjBSVnxlbnwwfHx8fDE3NjU3NzQ0NTF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "desert RV"
+    },
+    {
+      "id": "breakingbad-banner",
+      "description": "Banner for Breaking Bad",
+      "imageUrl": "https://images.unsplash.com/photo-1608037222022-62649819f8aa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxjaGVtaXN0cnklMjBsYWJ8ZW58MHx8fHwxNzY1NzAxMTM0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "chemistry lab"
+    },
+    {
+      "id": "got-poster",
+      "description": "Poster for Game of Thrones",
+      "imageUrl": "https://images.unsplash.com/photo-1568136483675-5c07cbf01b65?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxpcm9uJTIwdGhyb25lfGVufDB8fHx8MTc2NTc3NDQ1MXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "iron throne"
+    },
+    {
+      "id": "got-banner",
+      "description": "Banner for Game of Thrones",
+      "imageUrl": "https://images.unsplash.com/photo-1646215451135-f602b92c4c31?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxkcmFnb24lMjBmaXJlfGVufDB8fHx8MTc2NTc3NDQ1MXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "dragon fire"
+    },
+    {
+      "id": "mandalorian-poster",
+      "description": "Poster for The Mandalorian",
+      "imageUrl": "https://images.unsplash.com/photo-1698086032723-77b19d2ce2f2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxib3VudHklMjBodW50ZXJ8ZW58MHx8fHwxNzY1Njg5NDc3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "bounty hunter"
+    },
+    {
+      "id": "mandalorian-banner",
+      "description": "Banner for The Mandalorian",
+      "imageUrl": "https://images.unsplash.com/photo-1742515138874-fb2a6ded8c9f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxzcGFjZSUyMHdlc3Rlcm58ZW58MHx8fHwxNzY1Nzc0NDUxfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "space western"
+    },
+    {
+      "id": "user-avatar",
+      "description": "Default user avatar",
+      "imageUrl": "https://images.unsplash.com/photo-1690687505782-b7cc62530e0e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxwcm9maWxlJTIwcGljdHVyZXxlbnwwfHx8fDE3NjU3NTY4MzR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "profile picture"
+    },
+    {
+      "id": "article-bollywood",
+      "description": "An article about the history of Bollywood.",
+      "imageUrl": "https://images.unsplash.com/photo-1547106500-9b566874481b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxCb2xseXdvb2QlMjBjaW5lbWF8ZW58MHx8fHwxNzY1Nzc4OTYzfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "Bollywood cinema"
+    },
+    {
+      "id": "article-satyajit-ray",
+      "description": "An article about Satyajit Ray's cinematic genius.",
+      "imageUrl": "https://images.unsplash.com/photo-1516961642265-531546e84af2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHx2aW50YWdlJTIwY2FtZXJhfGVufDB8fHx8MTc2NTczNjMwOHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "vintage camera"
+    },
+    {
+      "id": "article-sound-design",
+      "description": "An article about the art of sound design in movies.",
+      "imageUrl": "https://images.unsplash.com/photo-1651838644528-cdc671c31395?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxhdWRpbyUyMG1peGVyfGVufDB8fHx8MTc2NTcxODI1OXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "audio mixer"
+    },
+    {
+      "id": "article-vfx",
+      "description": "An article about the evolution of visual effects.",
+      "imageUrl": "https://images.unsplash.com/photo-1649682892309-e10e0b7cd40b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHx2aXN1YWwlMjBlZmZlY3RzfGVufDB8fHx8MTc2NTc3ODk2M3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "visual effects"
+    }
+  ]
+}

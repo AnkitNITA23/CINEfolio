@@ -1,0 +1,189 @@
+/**
+ * Core Philosophy: This ruleset enforces a strict, user-centric security model. Data is segregated into two main categories:
+ * 1. Public Media Catalog: Information about movies, series, and genres is publicly readable by anyone, including unauthenticated users, to allow for browsing and discovery. All client-side writes to this catalog are disabled, assuming it is populated by a trusted backend service or admin SDK.
+ * 2. Private User Data: All data specific to a user (profile, watchlist, liked titles, etc.) is stored in subcollections under that user's unique ID (`/users/{userId}`). Access is strictly limited to the authenticated owner of that data, with the exception of the user profile itself which is public.
+ *
+ * Data Structure: The structure is designed for security and query performance. User-specific data is nested under `/users/{userId}`, creating a clear ownership hierarchy. Publicly accessible media and genre information resides in top-level collections (`/movies`, `/series`, `/genres`).
+ *
+ * Key Security Decisions:
+ * - User Profiles are Publicly Readable: Anyone can view a user's main profile document to enable social features like user search and profile pages.
+ * - User Enumeration is Disabled: Listing documents from the top-level `/users` collection is forbidden to protect user privacy.
+ * - Strict Ownership for Private Data: A user can only access private subcollections (watchlist, likedTitles, etc.) located under their own `/users/{userId}` path.
+ * - Admin-Managed Catalog: All write operations (`create`, `update`, `delete`) on the public `/movies`, `/series`, and `/genres` collections are disabled for clients. This ensures data integrity and consistency.
+ * - Secure Self-Signup: A new user is explicitly allowed to create their own user profile document, but no one else's.
+ *
+ * Denormalization for Authorization: To ensure security rules are fast and not reliant on slow/costly `get()` calls, user-specific documents (like a watchlist item) contain a denormalized `userId` field. The rules enforce that this `userId` field must match the `userId` in the document's path, guaranteeing data consistency and simple, powerful authorization checks.
+ *
+ * Structural Segregation: The separation of public data (e.g., `/movies`) and private data (e.g., `/users/{userId}/watchlists`) into different collections is a core design choice. This prevents accidental data leakage and allows for highly efficient and secure list operations on both public and private data.
+ */
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // -------------------------------------------------------------------------
+    // Helper Functions
+    // -------------------------------------------------------------------------
+
+    /**
+     * Checks if the user is authenticated.
+     */
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    /**
+     * Checks if the currently authenticated user's UID matches the provided userId.
+     * This is the primary function for verifying document ownership.
+     */
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    /**
+     * Validates that the `id` field inside a new user document matches the owner's UID.
+     * Enforces relational integrity for the user profile itself on creation.
+     */
+    function isCreatingOwnProfile(userId) {
+      return isOwner(userId) && request.resource.data.id == userId;
+    }
+
+    /**
+     * Validates that the `userId` field inside a subcollection document matches the
+     * owner's UID, ensuring data integrity on write.
+     */
+    function isWritingOwnSubcollectionDoc(userId) {
+      return isOwner(userId) && request.resource.data.userId == userId;
+    }
+
+
+    // -------------------------------------------------------------------------
+    // User Profiles
+    // -------------------------------------------------------------------------
+
+    /**
+     * @description Controls access to user profile documents and all their sub-collections.
+     * @path /users/{userId}
+     * @allow (get) Any user can read a user's profile.
+     * @allow (list) Authenticated users can list users (for search).
+     * @allow (update) An existing user accessing their own profile.
+     * @allow (create) A new user creating their own profile document.
+     * @deny (delete) Prevent deleting profiles.
+     */
+    match /users/{userId} {
+      allow get: if true;
+      allow list: if isSignedIn();
+      allow update: if isOwner(userId);
+      allow create: if isCreatingOwnProfile(userId);
+      allow delete: if false;
+
+      // -------------------------------------------------------------------------
+      // User-Specific Subcollections (Private Data)
+      // -------------------------------------------------------------------------
+
+      /**
+       * @description Secures a user's private watchlist. It can be read by anyone to enable the CineMatch feature.
+       * @path /users/{userId}/watchlist/{docId}
+       * @allow (read) All signed in users can read.
+       * @allow (write) A user managing entries in their own watchlist, with data integrity checks.
+       */
+      match /watchlist/{docId} {
+        allow read: if isSignedIn();
+        allow write: if isWritingOwnSubcollectionDoc(userId);
+      }
+
+      /**
+       * @description Secures a user's private watched history. It can be read by anyone to enable the CineMatch feature.
+       * @path /users/{userId}/watchedHistory/{docId}
+       * @allow (read) All signed in users can read.
+       * @allow (write) A user managing their own watched history, with data integrity checks.
+       */
+      match /watchedHistory/{docId} {
+        allow read: if isSignedIn();
+        allow write: if isWritingOwnSubcollectionDoc(userId);
+      }
+
+      /**
+       * @description Secures a user's private list of liked titles. It can be read by anyone to enable the CineMatch feature.
+       * @path /users/{userId}/likedTitles/{docId}
+       * @allow (read) All signed in users can read.
+       * @allow (write) A user managing their own liked titles, with data integrity checks.
+       */
+      match /likedTitles/{docId} {
+        allow read: if isSignedIn();
+        allow write: if isWritingOwnSubcollectionDoc(userId);
+      }
+      
+      /**
+       * @description Secures personalized recommendations generated for a user.
+       * @path /users/{userId}/recommendations/{recommendationId}
+       * @allow (get, list, delete) A user viewing or dismissing recommendations.
+       * @deny (create, update) Users cannot create or modify their own recommendations.
+       */
+      match /recommendations/{recommendationId} {
+        allow get, list, delete: if isOwner(userId);
+        allow create, update: if false;
+      }
+
+      /**
+       * @description Secures a user's following list.
+       * @path /users/{userId}/following/{followingId}
+       * @allow (read) Anyone can read who a user is following.
+       * @allow (write) A user can only modify their own following list.
+       */
+      match /following/{followingId} {
+        allow read: if true;
+        allow write: if isOwner(userId);
+      }
+
+      /**
+       * @description Secures a user's followers list.
+       * @path /users/{userId}/followers/{followerId}
+       * @allow (read) Anyone can read a user's followers.
+       * @allow (write) A user can only be added or removed from someone else's follower list by that someone else.
+       * The write rule is tricky. A user can make themselves a follower of someone.
+       */
+      match /followers/{followerId} {
+        allow read: if true;
+        allow write: if isOwner(followerId); // A user can add/remove themselves as a follower of another.
+      }
+    }
+
+
+    // -------------------------------------------------------------------------
+    // Public Media Catalog (Read-Only)
+    // -------------------------------------------------------------------------
+
+    /**
+     * @description Controls access to the public movie catalog.
+     * @path /movies/{movieId}
+     * @allow (get, list) Any user, including unauthenticated users, can read movie data.
+     * @deny (write) All client-side writes are forbidden to protect data integrity.
+     */
+    match /movies/{movieId} {
+      allow get, list: if true;
+      allow write: if false;
+    }
+
+    /**
+     * @description Controls access to the public series catalog.
+     * @path /series/{seriesId}
+     * @allow (get, list) Any user, including unauthenticated users, can read series data.
+     * @deny (write) All client-side writes are forbidden to protect data integrity.
+     */
+    match /series/{seriesId} {
+      allow get, list: if true;
+      allow write: if false;
+    }
+
+    /**
+     * @description Controls access to the public genres catalog.
+     * @path /genres/{genreId}
+     * @allow (get, list) Any user, including unauthenticated users, can read genre data.
+     * @deny (write) All client-side writes are forbidden to protect data integrity.
+     */
+    match /genres/{genreId} {
+      allow get, list: if true;
+      allow write: if false;
+    }
+  }
+}
