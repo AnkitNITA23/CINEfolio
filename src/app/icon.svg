@@ -1,0 +1,16 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 256 256"
+  width="1em"
+  height="1em"
+  fill="currentColor"
+>
+  <g fill="hsl(45 95% 55%)">
+    <path d="M48,48V208a8,8,0,0,0,16,0V48a8,8,0,0,0-16,0Z" />
+    <path d="M208,48V208a8,8,0,0,0,16,0V48a8,8,0,0,0-16,0Z" />
+    <path
+      d="M192,48H80V208H192V48Zm-16,144H96V64H176V192Z"
+      opacity="0.5"
+    />
+  </g>
+</svg>
